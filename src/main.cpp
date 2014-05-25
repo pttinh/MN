@@ -964,11 +964,11 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, int nBits)
 {
     int64 nSubsidy = 20 * COIN;
     double dDiff = ConvertBitsToDouble(nBits);
-    nSubsidy = (2222222 / (pow((dDiff+3000.0)/9.0,2.0)));
-    if (nSubsidy > 20) nSubsidy = 20;
-    else if (nSubsidy < 4) nSubsidy = 4;
+    nSubsidy = (2400000 / (pow((dDiff+3000.0)/9.0,2.0)) * COIN);
+    if (nSubsidy > 20 * COIN) nSubsidy = 20 * COIN;
+    else if (nSubsidy < 4 * COIN) nSubsidy = 4 * COIN;
 
-    return nSubsidy * COIN + nFees;
+    return nSubsidy + nFees;
 }
 
 // miner's coin stake reward based on nBits and coin age spent (coin-days)
