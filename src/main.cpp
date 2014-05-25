@@ -43,14 +43,14 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
 unsigned int nStakeMinAge = 60 * 60 * 24 * 7;	// minimum age for coin age: 20d
 unsigned int nStakeMaxAge = -1;	// stake age of full weight: 40d
-unsigned int nStakeTargetSpacing = 10 * 60;			// 10 min stake block spacing
+unsigned int nStakeTargetSpacing = 30;			// 10 min stake block spacing
 unsigned int nWorkTargetSpacing = 60;			// 1 min stake block spacing
 unsigned int nRetarget = 50;
 static const int64 nTargetTimespan_legacy = nWorkTargetSpacing * nRetarget; // every 50 blocks
 static const int64 nInterval = nTargetTimespan_legacy / nWorkTargetSpacing;
 
 int64 nChainStartTime = 1399999999;
-int nCoinbaseMaturity = 30;
+int nCoinbaseMaturity = 100;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 CBigNum bnBestChainTrust = 0;
@@ -962,11 +962,11 @@ static const int CUTOFF_HEIGHT = 100800;	// Height at the end of 5 weeks
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, int nBits)
 {
-    int64 nSubsidy = 50 * COIN;
+    int64 nSubsidy = 20 * COIN;
     double dDiff = ConvertBitsToDouble(nBits);
-    nSubsidy = (4444444.0 / (pow((dDiff+2600.0)/9.0,2.0)));
-    if (nSubsidy > 50) nSubsidy = 50;
-    else if (nSubsidy < 10) nSubsidy = 10;
+    nSubsidy = (2222222 / (pow((dDiff+3000.0)/9.0,2.0)));
+    if (nSubsidy > 20) nSubsidy = 20;
+    else if (nSubsidy < 4) nSubsidy = 4;
 
     return nSubsidy * COIN + nFees;
 }
@@ -2606,10 +2606,9 @@ bool LoadBlockIndex(bool fAllowNew)
         bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet
         nStakeMinAge = 20 * 60; // test net min age is 20 min
-        nStakeMaxAge = 60 * 60; // test net min age is 60 min
-		nModifierInterval = 60; // test modifier interval is 2 minutes
+        nModifierInterval = 10 * 60; // test modifier interval is 10 minutes
         nCoinbaseMaturity = 10; // test maturity is 10 blocks
-        nStakeTargetSpacing = 3 * 60; // test block spacing is 3 minutes
+        nStakeTargetSpacing = 30; // test block spacing is 30 seconds
     }
 
     //
